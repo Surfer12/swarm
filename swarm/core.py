@@ -68,28 +68,27 @@ class Swarm:
 
         return self.client.chat.completions.create(**create_params)
 
-    def handle_function_result(self, result, debug) -> Result:
-        match result:
-            case Result() as result:
-                return result
-
-            case Agent() as agent:
-                return Result(
-                    value=json.dumps({"assistant": agent.name}),
-                    agent=agent,
-                )
-            case _:
-                try:
-                    return Result(value=str(result))
-                except Exception as e:
-                    error_message = f"Failed to cast response to string: {result}. Make sure agent functions return a string or Result object. Error: {str(e)}"
-                    debug_print(debug, error_message)
-                    raise TypeError(error_message)
+    def handle_function_result(self, result, agent: Agent, debug) -> Result:
+        if isinstance(result, Result):
+            return result
+        elif isinstance(result, Agent):
+            return Result(
+                value=json.dumps({"assistant": result.name}),
+                agent=agent,
+            )
+        else:
+            try:
+                return Result(value=str(result))
+            except Exception as e:
+                error_message = f"Failed to cast response to string: {result}. Make sure agent functions return a string or Result object. Error: {str(e)}"
+                debug_print(debug, error_message)
+                raise TypeError(error_message)
 
     def handle_tool_calls(
         self,
         tool_calls: List[ChatCompletionMessageToolCall],
         functions: List[AgentFunction],
+        active_agent: Agent,
         context_variables: dict,
         debug: bool,
     ) -> Response:
@@ -121,7 +120,7 @@ class Swarm:
                 args[__CTX_VARS_NAME__] = context_variables
             raw_result = function_map[name](**args)
 
-            result: Result = self.handle_function_result(raw_result, debug)
+            result: Result = self.handle_function_result(raw_result, active_agent, debug)
             partial_response.messages.append(
                 {
                     "role": "tool",
@@ -213,7 +212,7 @@ class Swarm:
 
             # handle function calls, updating context_variables, and switching agents
             partial_response = self.handle_tool_calls(
-                tool_calls, active_agent.functions, context_variables, debug
+                tool_calls, active_agent.functions, active_agent, context_variables, debug
             )
             history.extend(partial_response.messages)
             context_variables.update(partial_response.context_variables)
@@ -278,7 +277,7 @@ class Swarm:
 
             # handle function calls, updating context_variables, and switching agents
             partial_response = self.handle_tool_calls(
-                message.tool_calls, active_agent.functions, context_variables, debug
+                message.tool_calls, active_agent.functions, active_agent, context_variables, debug
             )
             history.extend(partial_response.messages)
             context_variables.update(partial_response.context_variables)
