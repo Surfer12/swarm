@@ -1,0 +1,88 @@
+---
+alwaysApply: false
+description: Licensing practices—Internal-Use license, GPLv3/CC0 options, notices, and SPDX headers
+globs: *.py,*.java,*.kt,*.md,*.tex
+---
+
+### Notices (internal)
+
+- © 2025 Jumping Quail Solutions. All rights reserved.
+- Classification: Confidential — Internal Use Only
+- License: GPLv3. Use restricted by company policy and applicable NDAs.
+
+### Internal-Use License (paste-ready)
+
+```text
+LicenseRef-Internal-Use-Only v1.0
+
+Grant: The Owner grants Collaborators a non-exclusive, non-transferable, revocable, royalty-free license to use, reproduce, and modify this work solely for internal evaluation and collaboration on this project.
+
+Restrictions: No distribution outside the collaboration; no sublicensing; retain copyright and license notices; treat non-public materials as confidential.
+
+Contributions: Each Contributor grants the Owner a non-exclusive, perpetual, irrevocable license to use and relicense their contributions for the project. Contributors represent they have the right to contribute.
+
+IP/Patents: No patent license is granted beyond what is necessary to use the contribution internally. No trademark rights.
+
+Termination: This license terminates automatically upon breach or upon written notice. On termination, stop all use except archival records.
+
+No Warranty / No Liability: The work is provided “AS IS” without warranties. To the extent permitted by law, the Owner disclaims liability.
+
+Governing Law: [Your jurisdiction].
+```
+
+### SPDX headers
+
+- **Internal only**: `SPDX-License-Identifier: LicenseRef-Internal-Use-Only`
+- **GPL**: `SPDX-License-Identifier: GPL-3.0-or-later`
+- **CC0**: `SPDX-License-Identifier: CC0-1.0`
+
+Include a copyright line when possible:
+
+- `SPDX-FileCopyrightText: 2025 Jumping Quail Solutions`
+
+Header examples
+
+```python
+# SPDX-License-Identifier: LicenseRef-Internal-Use-Only
+# SPDX-FileCopyrightText: 2025 Jumping Quail Solutions
+
+def example():
+    return "ok"
+```
+
+```java
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: 2025 Jumping Quail Solutions
+ */
+public class Example { }
+```
+
+```text
+NOTICE
+Copyright (c) 2025 Jumping Quail Solutions.
+All rights reserved. See LICENSE and SPDX headers for terms.
+```
+
+### LaTeX (self-contained doc skeleton)
+
+```tex
+% SPDX-License-Identifier: LicenseRef-Internal-Use-Only
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\title{Internal vs. Public Licensing for the Ψ Work}
+\author{Jumping Quail Solutions}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Overview}
+This document explains internal-use licensing alongside public release options (GPLv3, CC0), with SPDX header guidance.
+\section*{Internal Use License}
+% Paste LicenseRef-Internal-Use-Only text here.
+\section*{Public Options}
+GPLv3 (\texttt{GPL-3.0-or-later}) and CC0 (\texttt{CC0-1.0}); when switching, update SPDX headers and NOTICE.
+\section*{File Headers}
+Show language-specific SPDX header examples.
+\end{document}
+```
+

@@ -1,0 +1,30 @@
+---
+alwaysApply: true
+description: Project structure guide and common entry points
+---
+
+### Library
+
+- Core library lives in `swarm/` with key modules:
+  - `swarm/core.py` (framework orchestration)
+  - `swarm/types.py`, `swarm/util.py`
+  - REPL in `swarm/repl/repl.py`
+
+### Examples and apps
+
+- Examples under `examples/` provide runnable demos and evaluation harnesses:
+  - `examples/basic/*.py` quick starts
+  - `examples/customer_service_streaming/main.py` (streaming)
+  - `examples/airline/main.py` (multi-agent w/ evals)
+
+### Tests
+
+- Unit tests in `tests/`:
+  - `tests/test_core.py`, `tests/test_util.py`
+  - Recorded runs under `tests/test_runs/`
+
+### Configuration and packaging
+
+- `pyproject.toml`, `setup.cfg` (Python packaging, formatting).
+- `README.md`, `SECURITY.md`, `LICENSE`.
+

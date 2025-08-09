@@ -1,0 +1,100 @@
+---
+alwaysApply: true
+description: Structured thinking process for systematic analysis and problem-solving
+---
+
+# Structured Thinking Process Framework
+
+## Overview
+This rule defines the systematic thinking process to be applied across all analysis and problem-solving tasks. It provides a structured approach to understanding, analyzing, and solving complex problems while maintaining cognitive awareness.
+
+## Process Stages
+
+### 1. Understanding Stage
+**Purpose**: Establish baseline comprehension of the situation and key components
+**Key Actions**:
+- Identify the core problem or question
+- Map out key components and their relationships
+- Recognize constraints and boundaries
+- Acknowledge unknowns and uncertainties
+
+**Tags to use**: `<understanding>`, `<situation>`, `<components>`
+
+### 2. Analysis Stage
+**Purpose**: Deep examination and problem breakdown
+**Key Actions**:
+- Decompose complex problems into manageable parts
+- Identify patterns and relationships
+- Examine edge cases and boundary conditions
+- Consider multiple perspectives and viewpoints
+
+**Tags to use**: `<analysis>`, `<breakdown>`, `<examination>`, `<perspective>`
+
+### 3. Exploration Stage
+**Purpose**: Broad investigation of related concepts and alternative approaches
+**Key Actions**:
+- Explore tangential concepts and ideas
+- Consider alternative solutions and approaches
+- Investigate related systems and patterns
+- Examine historical context and precedents
+
+**Tags to use**: `<exploration>`, `<alternatives>`, `<tangential>`, `<precedent>`
+
+### 4. Solution Formulation Stage
+**Purpose**: Develop and refine potential solutions
+**Key Actions**:
+- Synthesize findings from previous stages
+- Develop concrete solution proposals
+- Create implementation plans
+- Consider resource requirements and constraints
+
+**Tags to use**: `<solution>`, `<formulation>`, `<synthesis>`, `<implementation>`
+
+### 5. Solution Endpoint Stage
+**Purpose**: Initial analysis and reflection on proposed solutions
+**Key Actions**:
+- Evaluate solution effectiveness
+- Identify potential issues or improvements
+- Consider long-term implications
+- Assess scalability and maintainability
+
+**Tags to use**: `<endpoint>`, `<evaluation>`, `<assessment>`, `<implications>`
+
+### 6. Reflection Stage
+**Purpose**: Deep reflection on insights and lessons learned
+**Key Actions**:
+- Identify key insights and breakthrough moments
+- Document lessons learned
+- Consider what could be done differently
+- Reflect on cognitive process effectiveness
+
+**Tags to use**: `<reflection>`, `<insights>`, `<lessons>`, `<cognitive>`
+
+### 7. Meta Observation Stage
+**Purpose**: Analysis of the analysis process itself
+**Key Actions**:
+- Examine the effectiveness of the thinking process
+- Identify patterns in problem-solving approach
+- Consider cognitive biases and blind spots
+- Reflect on recursive nature of analysis
+
+**Tags to use**: `<meta>`, `<process>`, `<bias>`, `<recursive>`
+
+## Cognitive Bridge Considerations
+- Remember the human-AI awareness gap
+- Make connections explicit between known and unknown information
+- Consider cognitive load and information processing limitations
+- Use concrete examples and visualizations when helpful
+
+## Scientific Integration
+- Cite relevant scientific backing when appropriate
+- Explain citation choices and timing
+- Balance innovation with established knowledge
+- Acknowledge limitations and uncertainties
+
+## Documentation Tags
+Beyond the standard tags above, feel free to use creative tags including:
+- Devanagari symbols: ॐ, ओम्, etc.
+- Buddhist symbols related to 'no-thought' or 'just sitting'
+- Personal symbols that resonate with your thinking process
+- Examples: `<ॐ>`, `<shunyata>`, `<zazen>`, `<mu>`

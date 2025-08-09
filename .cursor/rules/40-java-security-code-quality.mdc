@@ -1,0 +1,94 @@
+---
+globs: *.java,*.kt
+description: Security-focused code quality standards for Java 24 and JVM languages
+---
+
+### Security-First Development
+
+#### Immutable Entities
+Use immutable entities wherever appropriate; immutable objects are inherently thread-safe and prevent many security vulnerabilities.
+
+```java
+// Preferred: Immutable record (Java 16+)
+public record UserCredential(String username, byte[] passwordHash, Instant created) {}
+
+// Alternative: Immutable class with builder
+public final class SecureConfig {
+    private final String apiKey;
+    private final Set<String> allowedOrigins;
+    private SecureConfig(Builder builder) {
+        this.apiKey = Objects.requireNonNull(builder.apiKey);
+        this.allowedOrigins = Set.copyOf(builder.allowedOrigins);
+    }
+    public static class Builder { }
+}
+```
+
+#### Java 24 Collections Usage
+Leverage modern collections (e.g., `SequencedCollection`, immutable collections) and enhanced Map APIs.
+
+```java
+Map<String, byte[]> sensitiveData = Collections.unmodifiableMap(new HashMap<>());
+List<String> readOnlyTokens = List.of("token1", "token2");
+SequencedSet<String> securityChain = new LinkedHashSet<>();
+```
+
+#### Thread Safety and Memory Management
+Prefer immutability; use appropriate locking; mind memory visibility and happens-before.
+
+```java
+public enum SecurityManager {
+    INSTANCE;
+    private final AtomicReference<Configuration> config = new AtomicReference<>(Configuration.defaultConfig());
+    public void updateConfig(Configuration newConfig) { config.set(newConfig); }
+}
+
+public final class SecurityPolicy {
+    private final Map<String, Boolean> permissions;
+    public SecurityPolicy(Map<String, Boolean> permissions) { this.permissions = Map.copyOf(permissions); }
+}
+```
+
+### Malicious Actor Considerations
+
+#### Input Validation
+Validate and sanitize all external inputs.
+
+```java
+public final class InputValidator {
+    private static final Pattern SAFE_PATTERN = Pattern.compile("[a-zA-Z0-9_-]+");
+    public static String sanitizeInput(String input) {
+        if (input == null || !SAFE_PATTERN.matcher(input).matches()) {
+            throw new SecurityException("Invalid input");
+        }
+        return input.trim();
+    }
+}
+```
+
+#### Resource Limits
+Implement resource limits to mitigate DoS.
+
+```java
+public class ResourceLimiter {
+    private final Semaphore semaphore; private final long maxProcessingTimeMs;
+    public <T> T executeWithLimits(Callable<T> task) {
+        try {
+            if (!semaphore.tryAcquire(5, TimeUnit.SECONDS)) { throw new SecurityException("Resource limit exceeded"); }
+            Future<T> future = executor.submit(task);
+            return future.get(maxProcessingTimeMs, TimeUnit.MILLISECONDS);
+        } finally { semaphore.release(); }
+    }
+}
+```
+
+### Code Review Checklist
+
+- **security**: inputs validated; no hardcoded secrets; safe error handling; resource limits; thread safety; immutability; reflection and serialization reviewed.
+- **performance**: data structures, allocations, cleanup, concurrency patterns, leak checks.
+- **java 24**: modern collection APIs; pattern matching; records; sealed classes; virtual threads for I/O.
+
+### Learning prompts
+
+When in doubt about thread safety: is it inherently safe? do we need sync? would immutability solve it? are we using the right primitives? what's the visibility guarantee?
+

@@ -1,0 +1,29 @@
+---
+alwaysApply: false
+description: Ψ policy — gauge freedom, threshold transfer, sensitivity invariants; MCDA composition
+globs: *.md,*.tex,*.py
+---
+
+### Core definitions
+
+- Evidence blend: `O(α) = α S + (1−α) N`
+- Penalty: `pen = exp(−[λ1 Ra + λ2 Rv])`
+- Raw belief: `R = β · O · pen`
+- Bounded policy score examples: `Ψ = min{R, 1}` or `Ψ = 1 − exp(−R)`
+
+### Invariance principles
+
+- **Gauge freedom**: Renaming/reparameterizing knobs that preserve the score function leaves behavior unchanged.
+- **Threshold transfer**: If uplift changes β→β′, rescale threshold `τ′ = τ · (β/β′)` to preserve decisions in sub-cap regions.
+- **Sensitivity invariants**: Signs/zeros of derivatives are stable under trivial reparameterizations and threshold transfers.
+
+### Discrete decision composition
+
+- Filter options by rules first; compute Ψ per option; feed Ψ into monotone MCDA.
+- If the MCDA aggregator M is strictly increasing in Ψ (others fixed), rankings are invariant under gauge freedom and threshold transfer.
+
+### Operational recommendations
+
+- Maintain uncapped belief channel `R` for expression; gate actions with bounded Ψ.
+- Version β and thresholds; document transfers; limit Δβ per step.
+

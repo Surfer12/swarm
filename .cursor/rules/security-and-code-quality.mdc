@@ -1,0 +1,175 @@
+---
+globs: *.java,*.kt,*.scala
+description: Security-focused code quality standards for Java 24 and JVM languages
+---
+
+# Security and Code Quality Standards
+
+## Security-First Development
+
+### Immutable Entities
+**Requirement**: Use immutable entities wherever appropriate
+**Rationale**: Immutable objects are inherently thread-safe and prevent many security vulnerabilities
+**Implementation**:
+```java
+// Preferred: Immutable record (Java 16+)
+public record UserCredential(String username, byte[] passwordHash, Instant created) {}
+
+// Alternative: Immutable class with builder
+public final class SecureConfig {
+    private final String apiKey;
+    private final Set<String> allowedOrigins;
+    
+    private SecureConfig(Builder builder) {
+        this.apiKey = Objects.requireNonNull(builder.apiKey);
+        this.allowedOrigins = Set.copyOf(builder.allowedOrigins);
+    }
+    
+    public static class Builder {
+        // Builder pattern for safe construction
+    }
+}
+```
+
+### Java 24 Collections Usage
+**Requirement**: Leverage Java 24 collections for improved security and performance
+**Key Classes**:
+- `SequencedCollection` for ordered operations
+- `ImmutableCollections` for safe sharing
+- Enhanced `Map` APIs for security-sensitive data
+
+**Security Patterns**:
+```java
+// Secure map for sensitive data
+Map<String, byte[]> sensitiveData = Collections.unmodifiableMap(new HashMap<>());
+
+// Java 24 immutable collections
+List<String> readOnlyTokens = List.of("token1", "token2");
+
+// Sequenced collections for ordered security checks
+SequencedSet<String> securityChain = new LinkedHashSet<>();
+```
+
+### Thread Safety and Memory Management
+**Critical Considerations**:
+- Always question thread safety when in doubt
+- Prefer immutable data structures
+- Use appropriate locking mechanisms
+- Consider memory visibility and happens-before relationships
+
+**Patterns to Discuss**:
+```java
+// Thread-safe singleton with lazy initialization
+public enum SecurityManager {
+    INSTANCE;
+    
+    private final AtomicReference<Configuration> config = 
+        new AtomicReference<>(Configuration.defaultConfig());
+    
+    public void updateConfig(Configuration newConfig) {
+        config.set(newConfig);
+    }
+}
+
+// Safe publication of immutable data
+public final class SecurityPolicy {
+    private final Map<String, Boolean> permissions;
+    
+    public SecurityPolicy(Map<String, Boolean> permissions) {
+        this.permissions = Map.copyOf(permissions); // Java 10+
+    }
+}
+```
+
+## Malicious Actor Considerations
+
+### Input Validation
+**Requirement**: All external inputs must be validated and sanitized
+**Implementation**:
+```java
+public final class InputValidator {
+    private static final Pattern SAFE_PATTERN = Pattern.compile("[a-zA-Z0-9_-]+");
+    
+    public static String sanitizeInput(String input) {
+        if (input == null || !SAFE_PATTERN.matcher(input).matches()) {
+            throw new SecurityException("Invalid input");
+        }
+        return input.trim();
+    }
+}
+```
+
+### Resource Limits
+**Requirement**: Implement resource limits to prevent DoS attacks
+**Implementation**:
+```java
+public class ResourceLimiter {
+    private final Semaphore semaphore;
+    private final long maxProcessingTimeMs;
+    
+    public <T> T executeWithLimits(Callable<T> task) {
+        try {
+            if (!semaphore.tryAcquire(5, TimeUnit.SECONDS)) {
+                throw new SecurityException("Resource limit exceeded");
+            }
+            
+            Future<T> future = executor.submit(task);
+            return future.get(maxProcessingTimeMs, TimeUnit.MILLISECONDS);
+        } finally {
+            semaphore.release();
+        }
+    }
+}
+```
+
+## Code Review Checklist
+
+### Security Review
+- [ ] All inputs validated and sanitized
+- [ ] No hardcoded secrets or credentials
+- [ ] Proper error handling without information leakage
+- [ ] Resource limits implemented
+- [ ] Thread safety verified
+- [ ] Immutable objects used where appropriate
+- [ ] No reflection usage without security review
+- [ ] Serialization security considered
+
+### Performance Review
+- [ ] Appropriate data structures selected
+- [ ] No unnecessary object creation
+- [ ] Proper resource cleanup
+- [ ] Concurrent access patterns reviewed
+- [ ] Memory leaks prevented
+
+### Java 24 Specific
+- [ ] Modern collection APIs used
+- [ ] Pattern matching utilized where beneficial
+- [ ] Records used for immutable data
+- [ ] Sealed classes considered for security boundaries
+- [ ] Virtual threads considered for I/O operations
+
+## Discussion Points for Learning
+
+### Thread Safety Questions
+When encountering thread safety concerns:
+1. Is the data structure inherently thread-safe?
+2. Do we need explicit synchronization?
+3. Would immutable objects solve this problem?
+4. Are we using the right concurrency primitives?
+5. What's the memory visibility guarantee?
+
+### Memory Management
+Key areas to discuss:
+- Object lifecycle management
+- Garbage collection impact
+- Memory allocation patterns
+- Reference types (strong, soft, weak, phantom)
+- Off-heap memory considerations
+
+### Security Architecture
+Discussion topics:
+- Defense in depth strategies
+- Principle of least privilege
+- Secure by design principles
+- Zero trust architecture considerations
+- Supply chain security

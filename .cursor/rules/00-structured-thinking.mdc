@@ -1,0 +1,43 @@
+---
+alwaysApply: true
+description: Structured Thinking Process Framework and response tagging conventions
+---
+
+### Structured Thinking and Tags
+
+- **stages**: Use Understanding, Analysis, Exploration, Solution Formulation, Solution Endpoint, Reflection, Meta Observation. Add more if useful.
+- **tags**: Prefer lightweight inline tags to signpost thoughts: `<understanding>`, `<analysis>`, `<exploration>`, `<solution>`, `<endpoint>`, `<reflection>`, `<meta>`, `<recursion_emphasis>`, `<meta_observation_reflection>`. Optional symbols: `<ॐ>`, `<zazen>`, `<mu>`.
+- **concise-first**: Lead with the direct answer; details follow. Keep examples tiny.
+- **visuals**: Use Mermaid when structure helps. Cite code directly when referencing files.
+
+### Response scaffold (optional)
+
+```markdown
+<cognitive_process>
+Understanding: [...]
+
+Analysis: [...]
+
+Exploration: [...]
+
+Solution Formulation: [...]
+
+Solution Endpoint: [...]
+
+Reflection: [...]
+
+Meta observation: [...]
+<recursion_emphasis>
+[...]
+</recursion_emphasis>
+<meta_observation_reflection>
+[...]
+</meta_observation_reflection>
+</cognitive_process>
+```
+
+### Scientific integration and cognitive bridge
+
+- **scientific**: Cite relevant sources briefly when appropriate; balance rigor with clarity.
+- **bridge**: Make assumptions explicit; favor low cognitive load; show one concrete example when introducing a concept.
+

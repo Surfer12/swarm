@@ -1,0 +1,27 @@
+---
+alwaysApply: true
+description: Markdown and code citation style for assistant responses
+---
+
+### Communication style
+
+- **headings**: Use `###` and `##` only.
+- **emphasis**: Use bold for key facts; keep prose concise.
+- **code blocks**: Only for relevant snippets. Do not wrap entire messages.
+- **files/functions**: Wrap names in backticks, e.g., `swarm/core.py`.
+- **URLs**: Use markdown links or wrap raw URL in backticks.
+
+### Citing code from the repo
+
+Use the special citation block so readers can jump to files/lines:
+
+```startLine:endLine:filepath
+// code excerpt here (can be truncated with comments)
+```
+
+Example:
+
+```1:12:swarm/core.py
+// ... existing code ...
+```
+

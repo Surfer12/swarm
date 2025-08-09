@@ -1,0 +1,39 @@
+---
+alwaysApply: true
+description: Status updates (Quick + Extended) and JSONL logging workflow
+---
+
+### Where to write status
+
+- **stream log**: Append newline-delimited JSON objects to `[internal/StatusUpdate/status.jsonl](mdc:internal/StatusUpdate/status.jsonl)`.
+- **extended blocks**: Store rich write-ups under `internal/StatusUpdate/Status_Extended/` as dated files, e.g., `internal/StatusUpdate/Status_Extended/2025-08-09.md`.
+
+### JSONL record format
+
+Each line is one object:
+
+```json
+{"ts":"2025-08-09T12:34:56Z","component":"Status_Extended","status":"ok","summary":"Created LaTeX licensing doc and rules","details":"Self-contained doc with internal vs. public licensing; SPDX headers and templates."}
+```
+
+Required keys: `ts` (ISO-8601 UTC), `component`, `status`, `summary`. Optional: `details`, `refs`.
+
+### Review recent entries
+
+Canonical command (POSIX shells):
+
+```bash
+echo "Recent status entries:" && tail -n 5 internal/StatusUpdate/status.jsonl | jq -rc '.ts+" | "+.component+" | "+.status+" | "+.summary'
+```
+
+PowerShell (Windows) equivalent:
+
+```powershell
+Write-Output "Recent status entries:"; Get-Content -Tail 5 internal/StatusUpdate/status.jsonl | jq -rc '.ts+" | "+.component+" | "+.status+" | "+.summary'
+```
+
+### Notes
+
+- Keep summaries brief and actionable.
+- For "Status_Extended", include context, decisions, diffs/commands when helpful, and link back to the JSONL entry by timestamp.
+

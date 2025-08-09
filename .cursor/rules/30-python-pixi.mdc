@@ -1,0 +1,30 @@
+---
+globs: *.py
+description: Run Python via Pixi; non-interactive execution; testing and style notes
+---
+
+### Execution via Pixi (Windows-friendly)
+
+- Prefer non-interactive exec: `pixi exec -- python path\to\script.py`.
+- Check environment: `pixi exec -- python -V`.
+- Run tests: `pixi exec -- pytest -q`.
+
+Fallback (if Pixi unavailable):
+
+```powershell
+python -m venv .venv; .\.venv\Scripts\python -m pip install -U pip; `
+    .\.venv\Scripts\pip install -r requirements.txt; `
+    .\.venv\Scripts\python path\to\script.py
+```
+
+### Non-interactive and logs
+
+- Assume no interactive input; pass `--yes`/quiet flags where tools support them.
+- Avoid pagers; if a command pages output, append `| cat` (POSIX) or use `| Out-String` in PowerShell.
+
+### Style
+
+- Follow `setup.cfg` for formatting (autopep8, line length 120).
+- Use type hints and descriptive names; avoid 1–2 character identifiers.
+- Prefer guard clauses and explicit error handling.
+
